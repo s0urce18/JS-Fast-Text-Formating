@@ -33,9 +33,9 @@
         facesRus = ['антиквенный', 'гротескный', 'курсивный', 'декоративный', 'моноширинный'];
 
         function continue1(strOrig, finalBlock, spanClassName, tagName){
-            span = document.createElement('span');
+            let span = document.createElement('span');
             span.className = spanClassName;
-            tag = document.createElement(tagName);
+            let tag = document.createElement(tagName);
             strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
             main(strOrig.slice(firstTextElem+1, secondTextElem), tag);
             span.append(tag);
@@ -46,10 +46,10 @@
         }
 
         function continue2(strOrig, finalBlock, spanClassName, tagName, tagAttribute, tagStyle){
-            span = document.createElement('span');
+            let span = document.createElement('span');
             span.className = spanClassName;
-            tag = document.createElement(tagName);
-            attributeVal = tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('ё', 'е');
+            let tag = document.createElement(tagName);
+            let attributeVal = tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('ё', 'е');
             for(i=0; i<facesRus.length; i++){
                 attributeVal = attributeVal.replace(facesRus[i], facesEng[i]);
             }
