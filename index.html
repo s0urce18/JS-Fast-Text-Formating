@@ -31,6 +31,38 @@
         colorsRus = ['красный', 'синий', 'зеленый', 'желтый', 'ораньжевый', 'белый', 'черный', 'серый', 'розовый', 'фиолетовый'];
         facesEng = ['serif', 'sans-serif', 'cursive', 'fantasy', 'monospace'];
         facesRus = ['антиквенный', 'гротескный', 'курсивный', 'декоративный', 'моноширинный'];
+
+        function continue1(strOrig, finalBlock, spanClassName, tagName){
+            span = document.createElement('span');
+            span.className = spanClassName;
+            tag = document.createElement(tagName);
+            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
+            main(strOrig.slice(firstTextElem+1, secondTextElem), tag);
+            span.append(tag);
+            finalBlock.append(span);
+            if(strNext.length > 0){
+                main(strNext, blk2);
+            }
+        }
+
+        function continue2(strOrig, finalBlock, spanClassName, tagName, tagAttribute, tagStyle){
+            span = document.createElement('span');
+            span.className = spanClassName;
+            tag = document.createElement(tagName);
+            attributeVal = tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('ё', 'е');
+            for(i=0; i<facesRus.length; i++){
+                attributeVal = attributeVal.replace(facesRus[i], facesEng[i]);
+            }
+            tag.setAttribute(tagAttribute, attributeVal)
+            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
+            main(strOrig.slice(firstTextElem+1, secondTextElem), tag);
+            span.append(tag);
+            finalBlock.append(span);
+            if(strNext.length > 0){
+                main(strNext, blk2);
+            }
+        }
+
         function main(strOrig, finalBlock) {
             tagStyle = '';
             firstTagElem = 0;
@@ -67,123 +99,31 @@
                             }
                         }
                         if(tagStyle == 'b' || tagStyle == 'ж'){
-                            spanBold = document.createElement('span');
-                            spanBold.className = "Bold";
-                            tagB = document.createElement('b');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagB);
-                            spanBold.append(tagB);
-                            finalBlock.append(spanBold);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Bold", 'b');
                         }
                         else if(tagStyle == 'i' || tagStyle == 'к'){
-                            spanItalic = document.createElement('span');
-                            spanItalic.className = "Italic";
-                            tagI = document.createElement('i');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagI);
-                            spanItalic.append(tagI);
-                            finalBlock.append(spanItalic);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Italic", 'i');
                         }
                         else if(tagStyle == 'u' || tagStyle == 'п'){
-                            spanUnderline = document.createElement('span');
-                            spanUnderline.className = "Underline";
-                            tagU = document.createElement('u');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagU);
-                            spanUnderline.append(tagU);
-                            finalBlock.append(spanUnderline);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Underline", 'u');
                         }
                         else if(tagStyle == 's' || tagStyle == 'з'){
-                            spanStrike = document.createElement('span');
-                            spanStrike.className = "Strike";
-                            tagS = document.createElement('s');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagS);
-                            spanStrike.append(tagS);
-                            finalBlock.append(spanStrike);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Strike", 's');
                         }
                         else if(tagStyle == 'sup' || tagStyle == 'в'){
-                            spanSuperscript = document.createElement('span');
-                            spanSuperscript.className = "Superscript";
-                            tagSup = document.createElement('sup');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagSup);
-                            spanSuperscript.append(tagSup);
-                            finalBlock.append(spanSuperscript);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Superscript", 'sup');
                         }
                         else if(tagStyle == 'sub' || tagStyle == 'н'){
-                            spanSubscript = document.createElement('span');
-                            spanSubscript.className = "Subscript";
-                            tagSub = document.createElement('sub');
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagSub);
-                            spanSubscript.append(tagSub);
-                            finalBlock.append(spanSubscript);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue1(strOrig, finalBlock, "Subscript", 'sub');
                         }
                         else if(tagStyle.includes('font_face:') || tagStyle.includes('шрифт_стиль:')){
-                            spanFontFace = document.createElement('span');
-                            spanFontFace.className = "FontFace";
-                            tagFontFace = document.createElement('font');
-                            attributeVal = tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('ё', 'е');
-                            for(i=0; i<facesRus.length; i++){
-                                attributeVal = attributeVal.replace(facesRus[i], facesEng[i]);
-                            }
-                            tagFontFace.setAttribute('face', attributeVal)
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagFontFace);
-                            spanFontFace.append(tagFontFace);
-                            finalBlock.append(spanFontFace);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue2(strOrig, finalBlock, "FontFace", 'font', 'face', tagStyle);
                         }
                         else if(tagStyle.includes('font_size:') || tagStyle.includes('шрифт_размер:')){
-                            spanFontSize = document.createElement('span');
-                            spanFontSize.className = "FontSize";
-                            tagFontSize = document.createElement('font');
-                            tagFontSize.setAttribute('size', tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('пт', 'pt').replace('пк', 'px'))
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagFontSize);
-                            spanFontSize.append(tagFontSize);
-                            finalBlock.append(spanFontSize);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue2(strOrig, finalBlock, "FontSize", 'font', 'size', tagStyle);
                         }
                         else if(tagStyle.includes('font_color:') || tagStyle.includes('шрифт_цвет:')){
-                            spanFontColor = document.createElement('span');
-                            spanFontColor.className = "FontColor";
-                            tagFontColor = document.createElement('font');
-                            attributeVal = tagStyle.slice(tagStyle.indexOf(':')+1, tagStyle.length).replace('ё', 'е');
-                            for(i=0; i<colorsRus.length; i++){
-                                attributeVal = attributeVal.replace(colorsRus[i], colorsEng[i]);
-                            }
-                            tagFontColor.setAttribute('color', attributeVal)
-                            strNext = (strOrig.slice(strOrig.indexOf('~', secondTextElem+2)+1, strOrig.length));
-                            main(strOrig.slice(firstTextElem+1, secondTextElem), tagFontColor);
-                            spanFontColor.append(tagFontColor);
-                            finalBlock.append(spanFontColor);
-                            if(strNext.length > 0){
-                                main(strNext, blk2);
-                            }
+                            continue2(strOrig, finalBlock, "FontColor", 'font', 'color', tagStyle);
                         }
                     }
                 }
