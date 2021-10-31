@@ -189,9 +189,49 @@
                 }
             }
         }
+
+        function closer(strOrig) {
+            tagStyle = '';
+            firstTagElem = 0;
+            secondTagElem = 0;
+            secondTagElem = strOrig.lastIndexOf('~');
+            firstTagElem = strOrig.lastIndexOf('~', secondTagElem-1);
+            return strOrig.slice(firstTagElem, secondTagElem+1);
+        }
+
         document.addEventListener('keydown', function(e) {
         if (e.code == 'Backquote' && (e.altKey || e.metaKey)) {
             e.target.value += '~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyB' && (e.altKey || e.metaKey)) {
+            e.target.value += '~b~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyI' && (e.altKey || e.metaKey)) {
+            e.target.value += '~i~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyU' && (e.altKey || e.metaKey)) {
+            e.target.value += '~u~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyS' && (e.altKey || e.metaKey)) {
+            e.target.value += '~s~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyF' && (e.altKey || e.metaKey)) {
+            e.target.value += '~font_~';
+            blk2.innerHTML = "";
+            main(e.target.value.replace(/\n/g, '<br/>'), blk2);
+        }
+        else if (e.code == 'KeyC' && (e.altKey || e.metaKey)) {
+            e.target.value += closer(e.target.value.replace(/\n/g, '<br/>'));
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
