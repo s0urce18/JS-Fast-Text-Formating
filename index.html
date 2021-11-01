@@ -140,39 +140,53 @@
             return strOrig.slice(firstTagElem, secondTagElem+1);
         }
 
+        function getCaretPos(objName) {
+            var obj = document.getElementById(objName);
+            obj.focus();
+            if (document.selection) { // IE
+            var sel = document.selection.createRange();
+            var clone = sel.duplicate();
+            sel.collapse(true);
+            clone.moveToElementText(obj);
+            clone.setEndPoint('EndToEnd', sel);
+            return clone.text.length;
+            } else if (obj.selectionStart!==false) return obj.selectionStart; // Gecko
+            else return 0;
+        }
+
         document.addEventListener('keydown', function(e) {
         if (e.code == 'Backquote' && (e.altKey || e.metaKey)) {
-            e.target.value += '~';
+            e.target.value = e.target.value.toString().slice(0, getCaretPos('block1'))+'~'+e.target.value.toString().slice(getCaretPos('block1'), e.target.value.toString().length);
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyB' && (e.altKey || e.metaKey)) {
-            e.target.value += '~b~';
+            e.target.value = e.target.value.slice(0, getCaretPos('block1'))+'~b~'+e.target.value.slice(getCaretPos('block1'), e.target.value.length);
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyI' && (e.altKey || e.metaKey)) {
-            e.target.value += '~i~';
+            e.target.value = e.target.value.slice(0, getCaretPos('block1'))+'~i~'+e.target.value.slice(getCaretPos('block1'), e.target.value.length);;
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyU' && (e.altKey || e.metaKey)) {
-            e.target.value += '~u~';
+            e.target.value = e.target.value.slice(0, getCaretPos('block1'))+'~u~'+e.target.value.slice(getCaretPos('block1'), e.target.value.length);;
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyS' && (e.altKey || e.metaKey)) {
-            e.target.value += '~s~';
+            e.target.value = e.target.value.slice(0, getCaretPos('block1'))+'~s~'+e.target.value.slice(getCaretPos('block1'), e.target.value.length);;
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyF' && (e.altKey || e.metaKey)) {
-            e.target.value += '~font_~';
+            e.target.value = e.target.value.slice(0, getCaretPos('block1'))+'~font_~'+e.target.value.slice(getCaretPos('block1'), e.target.value.length);;
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
         else if (e.code == 'KeyC' && (e.altKey || e.metaKey)) {
-            e.target.value += closer(e.target.value.replace(/\n/g, '<br/>'));
+            e.target.value = closer(e.target.value.toString().replace(/\n/g, '<br/>').slice(0, getCaretPos('block1')));
             blk2.innerHTML = "";
             main(e.target.value.replace(/\n/g, '<br/>'), blk2);
         }
